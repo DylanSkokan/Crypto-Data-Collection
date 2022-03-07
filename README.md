@@ -15,5 +15,5 @@ In its current state, this program tracks the top profiting crypto in the last 2
 
 There are plans to add simultanious methods for collecting data from separate sources at the same time.
 
-Currently only works on specific machines, this program was soley designed to work on my spare computer. It clicks specific pixel positions
+This program was soley designed to work on my spare computer. It clicks specific pixel positions
 which probably will not match up with your monitor resolution and sizing settings. Possible plans to allow GUI settings for user to specify positions needed.
