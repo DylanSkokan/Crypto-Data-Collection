@@ -15,8 +15,8 @@ import javax.swing.SwingWorker;
  */
 public class BitGainRobot {
 	/**
-	 * <h2>gainTracker</h2> Runs a SwingWorker in a background thread to carry out mouse and keyboard controls
-	 * for information gathering
+	 * <h2>gainTracker</h2> Runs a SwingWorker in a background thread to carry out
+	 * mouse and keyboard controls for information gathering
 	 */
 	public static void gainTracker() {
 		SwingWorker<Void, Void> bitWorker = new SwingWorker<Void, Void>() {
@@ -65,8 +65,21 @@ public class BitGainRobot {
 				}
 
 				// click change twice to get the greatest gain in the past hour
+				// needs to find change button, it moves sometimes
 				robot.delay(1000);
-				robot.mouseMove(747, 445);
+
+				int xPos = 789;
+				robot.mouseMove(xPos, 443);
+				while (robot.getPixelColor(xPos, 443).getRed() > 250 && robot.getPixelColor(xPos, 443).getGreen() > 250
+						&& robot.getPixelColor(xPos, 443).getBlue() > 250) {
+					xPos--;
+					robot.mouseMove(xPos, 443);
+					robot.delay(200);
+					if (xPos == 0) {
+						break;
+					}
+				}
+
 				robot.setAutoDelay(vars.delayNum);
 				RF.click(robot);
 				robot.setAutoDelay(vars.delayNum);
@@ -83,7 +96,7 @@ public class BitGainRobot {
 				}
 
 				robot.setAutoDelay(vars.delayNum);
-				robot.mouseMove(747, 445);
+				robot.mouseMove(xPos, 443);
 				RF.click(robot);
 
 				waitingCounter = 0;
@@ -105,7 +118,7 @@ public class BitGainRobot {
 				robot.setAutoDelay(vars.delayNum);
 
 				// look for bitcoin acronym
-				int xPos = 1089;
+				xPos = 1089;
 				robot.mouseMove(xPos, 230);
 
 				robot.setAutoDelay(3);
