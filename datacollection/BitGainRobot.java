@@ -63,18 +63,29 @@ public class BitGainRobot {
 						break;
 					}
 				}
-
+				
+				// click tradable assets
+				robot.mouseMove(975, 363);
+				RF.click(robot);
+				robot.delay(200);
+				robot.setAutoDelay(vars.delayNum);
+				
+				robot.mouseMove(978, 522);
+				RF.click(robot);
+				robot.delay(200);
+				robot.setAutoDelay(vars.delayNum);
+				
 				// click change twice to get the greatest gain in the past hour
 				// needs to find change button, it moves sometimes
 				robot.delay(1000);
 
 				int xPos = 789;
 				robot.mouseMove(xPos, 443);
+				robot.setAutoDelay(20);
 				while (robot.getPixelColor(xPos, 443).getRed() > 250 && robot.getPixelColor(xPos, 443).getGreen() > 250
 						&& robot.getPixelColor(xPos, 443).getBlue() > 250) {
 					xPos--;
 					robot.mouseMove(xPos, 443);
-					robot.delay(200);
 					if (xPos == 0) {
 						break;
 					}

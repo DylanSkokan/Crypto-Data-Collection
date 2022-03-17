@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -66,12 +67,23 @@ public class GUI extends JFrame implements ActionListener {
 	 */
 	GUI() {
 		FileIO.checkForFolders();
-
 		boolean fileCheck = FileIO.loadProgramState();
 		var vars = Var.getVars();
 		var logLists = LogLists.getLists();
+		
+		// populate methods to see if this is empty
+		if(vars.methodResults.isEmpty()) {
+			for(int i = 1; i < 150; i++) {
+				for(int j = -100; j < -1; j++) {
+					Methods newMethod = new Methods(i, j);
+					vars.methodResults.add(newMethod);
+				}
+			}
+		}
 
 		FileIO.setLogOutput("logFiles/" + TimeManager.getCurrentTimeFileFormat() + ".txt");
+		
+		System.out.println(Arrays.asList(vars.methodResults));
 
 		setTitle("Crypto Data Collection");
 		setResizable(true);
@@ -275,8 +287,6 @@ public class GUI extends JFrame implements ActionListener {
 		}
 
 		FileIO.loadLogs();
-		System.out.println(
-				FileIO.loadProgramState() == false ? "Did not load from programState" : "Loaded from programState");
 
 		bitcoinTotalChangeField.setText(Double.toString(vars.bitcoinCurrentGLPercent));
 		if (vars.madeBitcoinBuy == true) {

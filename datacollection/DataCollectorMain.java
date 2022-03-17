@@ -17,7 +17,7 @@ public class DataCollectorMain {
 		SwingUtilities.invokeLater(new Runnable() {
 
 			public void run() {
-
+				
 				GUI frame = new GUI();
 
 				frame.pack();

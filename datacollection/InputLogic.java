@@ -1,5 +1,7 @@
 package investing.crypto.datacollection;
 
+import java.util.Arrays;
+
 /**
  * <h2>InputLogic</h2> Handles the input from the input box.
  * 
@@ -53,6 +55,10 @@ public class InputLogic {
 			Var.setVars(null);
 			FileIO.saveProgramState();
 		}
+		if (userInput.equals("resetCode4")) {
+			vars.methodResults.clear();
+			FileIO.saveProgramState();
+		}
 
 		if (userInput.contains(".com")) {
 			System.out.println("userInput contains .com, must be URL, did not accept input\n");
@@ -97,18 +103,18 @@ public class InputLogic {
 
 			// check if input is at least 3 digits long, and it is a number, and it has a
 			// decimal, and the bitcoin value is for the currently watching bitcoin
-			if (acceptInput == true && vars.acceptBitcoinInput == true) {
+			if (acceptInput == true) {
 				if (priceComparison < 65 && priceComparison > -65) {
 					System.out.println("bitcoinPrice: " + bitcoinPrice + "\n");
 
 					if (vars.madeBitcoinBuy == true) {
 						if (vars.startingBitcoinPrice == 0 && bitcoinPrice != 0) {
-							String logEntry = dateTime + "Starting price: " + bitcoinPrice;
+							vars.startingBitcoinPrice = bitcoinPrice * 1.005;
+							
+							String logEntry = dateTime + "Starting price: " + vars.startingBitcoinPrice;
 							System.out.println(logEntry + "\n");
 							GUI.bitcoinLogArea.append(logEntry + "\n");
 							logLists.bitcoinLogList.add(logEntry);
-
-							vars.startingBitcoinPrice = bitcoinPrice * 1.005;
 						}
 						if (vars.startingBitcoinPrice != 0) {
 							if (vars.lowestBitcoinPrice == 0) {
@@ -135,24 +141,20 @@ public class InputLogic {
 
 							GUI.bitcoinScoreDifferenceField.setText(Double.toString(vars.bitcoinPcLow));
 
-							System.out.println("vars.bitcoinPcHigh: " + vars.bitcoinPcHigh);
 							System.out.println("vars.calcBitcoinChange: " + vars.calcBitcoinChange);
+							System.out.println("vars.bitcoinPcHigh: " + vars.bitcoinPcHigh);
+							System.out.println("vars.bitcoinPcLow: " + vars.bitcoinPcLow);
 
-							if (vars.bitcoinPcHigh > 7 && vars.calcBitcoinChange < vars.bitcoinPcHigh * 0.6) {
-								System.out.println(
-										"vars.bitcoinPcHigh > 7 && vars.calcBitcoinChange < vars.bitcoinPcHigh * 0.6");
-
-								vars.trySellBitcoin = true;
-							}
-							if (vars.bitcoinPcHigh > 12 && vars.calcBitcoinChange < vars.bitcoinPcHigh) {
-								System.out.println("vars.calcBitcoinChange > vars.averageGainHighpoint");
-
-								vars.trySellBitcoin = true;
-							}
-							if (vars.calcBitcoinChange < -2) {
-								System.out.println("vars.calcBitcoinChange < vars.averageGainLowpoint");
-
-								vars.trySellBitcoin = true;
+							System.out.println(Arrays.asList(vars.methodResults));
+							
+							for(Methods currMethod : vars.methodResults) {
+								if(currMethod.sold == false) {
+									if(vars.calcBitcoinChange > currMethod.gainCutoffPercent ||
+											vars.calcBitcoinChange < currMethod.lossCutoffPercent) {
+										currMethod.currentGL = Calc.calcBitcoinGL(currMethod.currentGL);
+										currMethod.sold = true;
+									}
+								}
 							}
 						}
 					}

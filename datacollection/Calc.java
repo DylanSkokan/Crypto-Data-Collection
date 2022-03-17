@@ -38,10 +38,14 @@ public class Calc {
 	 * @param percentChange the newest trade to be accounted for.
 	 * @return the new percent change in the mock account.
 	 */
-	public static double calcBitcoinGL(double percentChange) {
+	public static double calcBitcoinGL(double currentGL) {
 		var vars = Var.getVars();
-		vars.bitcoinCurrentGL = vars.bitcoinCurrentGL * ((percentChange / 100) + 1);
-		return vars.bitcoinCurrentGLPercent = calcChange(5000, vars.bitcoinCurrentGL);
+		
+		//account for trade fees
+		double percentChange = Calc.calcChange(vars.startingBitcoinPrice, vars.bitcoinPriceGlobal * 0.995);
+		
+		//calc new current GL
+		return currentGL = currentGL * ((percentChange / 100) + 1);
 	}
 
 	/**

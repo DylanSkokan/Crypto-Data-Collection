@@ -164,7 +164,7 @@ public class Var implements Serializable {
 
 	// GENERAL
 	protected int delayNum = 20;
-	protected int diffBitThreshold = 10;
+	protected int diffBitThreshold = 8;
 	protected boolean isMidnight;
 	protected boolean cutoffMode = true;
 
@@ -220,4 +220,7 @@ public class Var implements Serializable {
 	protected ArrayList<Double> gainLowpoints = new ArrayList<Double>();
 	protected ArrayList<Double> lossHighpoints = new ArrayList<Double>();
 	protected ArrayList<Double> lossLowpoints = new ArrayList<Double>();
+	
+	// Methods to test
+	protected ArrayList<Methods> methodResults = new ArrayList<Methods>();
 }

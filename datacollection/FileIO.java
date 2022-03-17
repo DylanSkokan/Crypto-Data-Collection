@@ -45,6 +45,14 @@ public class FileIO implements Serializable {
 				e.printStackTrace();
 			}
 		}
+		if (!Files.isDirectory(Paths.get("methodSuccess"))) {
+			try {
+				Files.createDirectories(Paths.get("methodSuccess"));
+			} catch (IOException e) {
+				System.out.println("Error in creating methodSuccess folder:\n" + e.getMessage());
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
