@@ -1,6 +1,6 @@
 # Crypto-Data-Collection
 The purpose of this program is to collect information on cryptocurrencies for the possibility that there might exist an algorithm that if followed will
-generate profit over time. This program is experimental, in practice there may not be an algorithm a program can follow to generate profit over time
+generate profit over time. This program is experimental, in practice there may not be (and probably isn't) an algorithm a program can follow to generate profit over time
 given cryptocurrency data, but there is another reason I am making this program: to get practice using GUI, singleton, multithreading, saving data by serialization, 
 and data structures.
 
